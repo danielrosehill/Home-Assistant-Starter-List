@@ -22,12 +22,14 @@ The notes are opinionated
   - [HAOS](#haos)
   - [Use ChatGPT (no, really)](#use-chatgpt-no-really)
   - [Final Advice](#final-advice)
+- [Remote Access](#remote-access)
 - [Shopping Lists](#shopping-lists)
   - [Essential Hardware Shopping List](#essential-hardware-shopping-list)
   - [Smart Home Devices Shopping List](#smart-home-devices-shopping-list)
   - [Shopping in Israel](#shopping-in-israel)
 - [Time Investment](#time-investment)
 - [Communities](#communities)
+- [My Personal Home Assistant Do's and Don'ts](#my-personal-home-assistant-dos-and-donts)
 
 # Hardware
 
@@ -174,14 +176,53 @@ A few tips for Zigbee2MQTT:
 - Avoid the temptation to make "friendly names" nice on the eyes. Stick to whatever_this_case_is_called (I always forget) to avoid the potential pitfalls of having space escapes in your topic names causing problems  
 - Install MQTT Explorer on your desktop. Just watch the payloads move across your network. This is as good way to learn by quiet observation how the protocol works. From there, you can move onto sending payloads to do things. 
 
+---
 
-## Communities
+## Remote Access
 
-These communities are pretty helpful and you can turn to them for help with any Home Assistant questions or issues you encounter.
+For accessing your Home Assistant installation remotely, I personally use and recommend **Cloudflare Tunnel**.
 
-[![Home Assistant Subreddit](https://img.shields.io/badge/Reddit-r%2Fhomeassistant-red?logo=reddit&style=flat-square)](https://www.reddit.com/r/homeassistant/)
+### Cloudflare Tunnel Setup
 
-[![Home Assistant Forums](https://img.shields.io/badge/Forum-community.home--assistant.io-blue?logo=home-assistant&style=flat-square)](https://community.home-assistant.io/)
+Cloudflare Tunnel provides secure remote access without opening ports on your firewall or exposing your home IP address. It's free and reliable.
+
+**Deployment Options:**
+1. **Direct on Home Assistant**: Deploy the Cloudflare Tunnel directly onto the Home Assistant device
+2. **Separate Device**: Run the tunnel on another device and tunnel to your HA instance
+
+### Android App Authentication Issue
+
+⚠️ **Important Note**: The only pitfall with Cloudflare Tunnel is that the Android Home Assistant app can have trouble authenticating when using Cloudflare Access for security.
+
+**Workaround**: Instead of using Cloudflare Access, implement other security measures:
+- Use Home Assistant's built-in authentication
+- Implement IP restrictions if needed
+- Consider additional security layers at the application level
+
+### Pro Tips for Reliability
+
+**Create Backup Endpoints**: Set up redundant access methods for maximum reliability:
+
+1. **Primary Tunnel**: Main Cloudflare Tunnel on your Home Assistant device
+2. **Backup Tunnel**: Secondary tunnel on another local device (like a Raspberry Pi or spare mini PC)
+
+This ensures that if your main tunnel appliance isn't working for some reason, you still have remote access through the backup endpoint.
+
+### SSH Access with Tailscale
+
+For local operations and troubleshooting, install **Tailscale** alongside your Cloudflare setup:
+
+- **Purpose**: Facilitates secure SSH access to your Home Assistant device
+- **Use Case**: Remote administration, debugging, file transfers
+- **Benefit**: Works even if your web-based access is having issues
+
+**Recommended Setup:**
+```
+Internet → Cloudflare Tunnel → Home Assistant (Web UI)
+Internet → Tailscale → Home Assistant (SSH/Admin)
+```
+
+This dual approach gives you both user-friendly web access and administrative access when needed.
 
 ---
 
@@ -255,3 +296,25 @@ Once set up, Home Assistant is relatively low-maintenance:
 - **Creating Automations:** Variable (but ChatGPT helps a lot!)
 
 **Pro Tip:** Buy some extra Ethernet cable while you're at it - you'll inevitably need it for expanding your setup or troubleshooting connectivity issues.
+
+---
+
+## Communities
+
+These communities are pretty helpful and you can turn to them for help with any Home Assistant questions or issues you encounter.
+
+[![Home Assistant Subreddit](https://img.shields.io/badge/Reddit-r%2Fhomeassistant-red?logo=reddit&style=flat-square)](https://www.reddit.com/r/homeassistant/)
+
+[![Home Assistant Forums](https://img.shields.io/badge/Forum-community.home--assistant.io-blue?logo=home-assistant&style=flat-square)](https://community.home-assistant.io/)
+
+---
+
+## My Personal Home Assistant Do's and Don'ts
+
+| ✅ DO | ❌ DON'T | Why |
+|-------|----------|-----|
+| **Use Ethernet for the Home Assistant box** | **Use Wi-Fi for the Home Assistant box** | Wired connections are more reliable and faster. Wi-Fi can be unreliable for critical infrastructure, has potential for interference, and adds troubleshooting complexity. |
+| **Use a dedicated piece of hardware** | **Use a non-dedicated host** | Dedicated hardware ensures consistent performance, makes troubleshooting easier, and prevents resource conflicts with other applications. |
+| **Use Home Assistant OS** | **Use Home Assistant as a container or other deployment** | HAOS is the official deployment method with best support, simplified updates, integrated supervisor, and easy add-on management. Container deployments lack the integrated ecosystem. |
+| **Use ZigBee for smart devices** | **Use Wi-Fi for smart devices (avoid where possible)** | ZigBee is more reliable, creates its own mesh network, and doesn't congest your Wi-Fi. Wi-Fi devices can overwhelm your network and have potential security concerns. |
+| **Put networking gear and HA on a UPS** | **Trust your power supply to not go down** | UPS protects against outages, maintains functionality during brief interruptions, and prevents data corruption. Power outages are inevitable and sudden shutdowns can corrupt your HA database. |

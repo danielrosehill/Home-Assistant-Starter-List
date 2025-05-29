@@ -8,6 +8,27 @@ This is a short (and maybe somewhat sweet) summary (timestamp: May 29-2025).
 
 The notes are opinionated
 
+## Table of Contents
+
+- [Hardware](#hardware)
+  - [Mini PC, Industrial PC, NIC](#mini-pc-industrial-pc-nic)
+  - [A UPS](#a-ups)
+  - [Zigbee Coordinator](#zigbee-coordinator)
+  - [Zigbee Repeaters](#zigbee-repeaters)
+  - [Networking Setup](#networking-setup)
+  - [Smart Home Hardware](#smart-home-hardware)
+  - [Why Not To Buy Tuya](#why-not-to-buy-tuya)
+- [Software](#software)
+  - [HAOS](#haos)
+  - [Use ChatGPT (no, really)](#use-chatgpt-no-really)
+  - [Final Advice](#final-advice)
+- [Shopping Lists](#shopping-lists)
+  - [Essential Hardware Shopping List](#essential-hardware-shopping-list)
+  - [Smart Home Devices Shopping List](#smart-home-devices-shopping-list)
+  - [Shopping in Israel](#shopping-in-israel)
+- [Time Investment](#time-investment)
+- [Communities](#communities)
+
 # Hardware
 
 ## Mini PC, Industrial PC, NIC
@@ -51,6 +72,8 @@ This is a networking/HA stack with:
 I use the SMLight SLZB-06. It's a stellar piece of hardware (but probably already a bit outdated).
 
 ![alt text](graphics/7.png).
+
+**Manufacturer:** [SMLight](https://smlight.tech/) - They're a small company making excellent ZigBee coordinators and they're really awesome to work with.
 
 See what people recommend on the HA subreddit or forums. If somethiing is widely used and respected by users ... it's hard to go wrong. 
 
@@ -112,7 +135,6 @@ Advice that will save you time: don't bother.
 
 Or ask yourself this: if I want to turn on the light in my bathroom, should the data to do that travel to China and back? If you share my belief that that is: a) illogical and b) a bit sketchy then pay the Zigbee premium (which will probably erode over time). There is no reason why smart home hardware which you purchased should leave your LAN.
 
-
 # Software
 
 ## HAOS
@@ -155,6 +177,81 @@ A few tips for Zigbee2MQTT:
 
 ## Communities
 
+These communities are pretty helpful and you can turn to them for help with any Home Assistant questions or issues you encounter.
+
 [![Home Assistant Subreddit](https://img.shields.io/badge/Reddit-r%2Fhomeassistant-red?logo=reddit&style=flat-square)](https://www.reddit.com/r/homeassistant/)
 
 [![Home Assistant Forums](https://img.shields.io/badge/Forum-community.home--assistant.io-blue?logo=home-assistant&style=flat-square)](https://community.home-assistant.io/)
+
+---
+
+## Shopping Lists
+
+### Essential Hardware Shopping List
+
+| Item | Approximate Price (USD) | Where to Buy | Notes |
+|------|------------------------|---------------|-------|
+| Mini PC (8GB RAM, 256GB SSD) | $200-400 | Amazon, Newegg | Look for Intel N100 or similar |
+| UPS (600VA-1000VA) | $80-150 | Amazon, local electronics stores | Ensure IEC outlets |
+| Ethernet Switch (8-port) | $25-50 | Amazon, networking stores | Unmanaged is fine |
+| POE Switch (4-8 port) | $50-100 | Amazon, networking stores | For ZigBee coordinator |
+| ZigBee Coordinator (SMLight SLZB-06) | $35-50 | [SMLight](https://smlight.tech/) | POE powered |
+| Ethernet Cables (Cat6, various lengths) | $20-40 | Amazon, electronics stores | Buy a variety pack |
+| IEC to plug adapters | $10-20 | Amazon, electronics stores | For UPS connectivity |
+
+**Total Essential Setup: ~$420-810**
+
+### Smart Home Devices Shopping List
+
+| Item | Approximate Price (USD) | Where to Buy | Protocol |
+|------|------------------------|---------------|----------|
+| ZigBee E27 Smart Bulbs | $15-25 each | Amazon, Philips Hue | ZigBee |
+| ZigBee Smart Switches | $20-40 each | Amazon, Aqara, Sonoff | ZigBee |
+| ZigBee Motion Sensors | $15-30 each | Amazon, Aqara | ZigBee |
+| ZigBee Door/Window Sensors | $10-20 each | Amazon, Aqara | ZigBee |
+| ZigBee Smart Plugs | $15-25 each | Amazon, Sonoff | ZigBee |
+| ZigBee Temperature Sensors | $15-25 each | Amazon, Aqara | ZigBee |
+| ZigBee Repeaters (if needed) | $15-30 each | Amazon, IKEA | ZigBee |
+
+### Shopping in Israel
+
+For Israeli buyers, here are the best options:
+
+| Store | Best For | Notes |
+|-------|----------|-------|
+| **AliExpress** | ZigBee devices, sensors, basic hardware | Longer shipping, but great prices |
+| **Ivory PC** | Mini PCs, networking equipment, UPS | Local warranty, faster delivery |
+| **Amazon** | Branded items, quick delivery | Higher prices but reliable |
+| **Local Electronics Stores** | UPS, cables, basic networking | Immediate availability |
+
+**Note:** While AliExpress has many Tuya devices, stick to ZigBee devices from reputable brands like Aqara, Sonoff, or IKEA for better integration.
+
+---
+
+## Time Investment
+
+### Setup Phase (The Hardest Part)
+The initial setup is definitely the most time-consuming part of your Home Assistant journey:
+
+- **Hardware Setup:** 2-4 hours (assembling, connecting, basic networking)
+- **HAOS Installation:** 1-2 hours (installation, initial configuration)
+- **ZigBee Coordinator Setup:** 1-2 hours (MQTT broker, ZigBee2MQTT configuration)
+- **First Device Pairing:** 1-2 hours (learning the process, troubleshooting)
+
+**Total Initial Investment: 5-10 hours**
+
+### Why Start with Dedicated Hardware?
+The reason I recommend HAOS on dedicated hardware from the get-go is that **you're priming yourself for growth**. Here's why:
+
+- **Avoid Migration Pain:** If you start with a container setup, you'll eventually outgrow it and want to move to dedicated hardware. Migration is time-consuming and can be frustrating.
+- **Better Performance:** Dedicated hardware provides consistent performance and reliability.
+- **Easier Troubleshooting:** Physical access to the device makes debugging much simpler.
+- **Room to Grow:** As you add more devices and automations, you'll appreciate having dedicated resources.
+
+### Ongoing Maintenance
+Once set up, Home Assistant is relatively low-maintenance:
+- **Monthly:** ~30 minutes (updates, checking logs)
+- **Adding New Devices:** ~15-30 minutes per device (gets faster with experience)
+- **Creating Automations:** Variable (but ChatGPT helps a lot!)
+
+**Pro Tip:** Buy some extra Ethernet cable while you're at it - you'll inevitably need it for expanding your setup or troubleshooting connectivity issues.
